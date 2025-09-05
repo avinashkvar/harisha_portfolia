@@ -1244,6 +1244,102 @@
           font-size: 0.8rem;
         }
       }
+
+      /* Notification Styles */
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 3000;
+        max-width: 400px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        animation: slideIn 0.3s ease forwards;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .notification-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        position: relative;
+      }
+
+      .notification-success {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+      }
+
+      .notification-error {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+      }
+
+      .notification-info {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+      }
+
+      .notification-content i:first-child {
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+
+      .notification-content span {
+        flex: 1;
+        font-weight: 500;
+        line-height: 1.4;
+      }
+
+      .notification-close {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+        flex-shrink: 0;
+      }
+
+      .notification-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Mobile responsive for notifications */
+      @media (max-width: 768px) {
+        .notification {
+          top: 10px;
+          right: 10px;
+          left: 10px;
+          max-width: none;
+        }
+
+        .notification-content {
+          padding: 12px;
+        }
+
+        .notification-content span {
+          font-size: 0.9rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1665,6 +1761,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
       // Theme Toggle
       function toggleTheme() {
@@ -1785,7 +1882,13 @@
         });
       }
 
-      // Contact form handling
+      // Initialize EmailJS
+      function initEmailJS() {
+        // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+        emailjs.init("zXREO9FcSH4XPue9E");
+      }
+
+      // Contact form handling with EmailJS
       function handleContactForm() {
         const form = document.getElementById("contactForm");
 
@@ -1799,22 +1902,80 @@
           const subject = formData.get("subject");
           const message = formData.get("message");
 
-          // Create mailto link
-          const mailtoLink = `mailto:harishharishl124@gmail.com?subject=${encodeURIComponent(
-            subject
-          )}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+          // Show loading state
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+          submitBtn.disabled = true;
 
-          // Open email client
-          window.location.href = mailtoLink;
+          // EmailJS template parameters
+          const templateParams = {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message,
+            to_email: "k3076183@gmail.com",
+          };
 
-          // Show success message (you can customize this)
-          alert(
-            "Thank you for your message! Your email client should now open with the pre-filled message."
-          );
-
-          // Reset form
-          form.reset();
+          // Send email using EmailJS
+          emailjs
+            .send("service_1ng245s", "template_hvbofuq", templateParams)
+            .then(
+              function (response) {
+                // Success
+                showNotification(
+                  "Thank you for your message! I'll get back to you soon.",
+                  "success"
+                );
+                form.reset();
+              },
+              function (error) {
+                // Error
+                console.error("EmailJS Error:", error);
+                showNotification(
+                  "Sorry, there was an error sending your message. Please try again or contact me directly.",
+                  "error"
+                );
+              }
+            )
+            .finally(function () {
+              // Reset button state
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+            });
         });
+      }
+
+      // Show notification function
+      function showNotification(message, type = "info") {
+        // Create notification element
+        const notification = document.createElement("div");
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+          <div class="notification-content">
+            <i class="fas ${
+              type === "success"
+                ? "fa-check-circle"
+                : type === "error"
+                ? "fa-exclamation-circle"
+                : "fa-info-circle"
+            }"></i>
+            <span>${message}</span>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        `;
+
+        // Add to page
+        document.body.appendChild(notification);
+
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+          if (notification.parentElement) {
+            notification.remove();
+          }
+        }, 5000);
       }
 
       // Typing animation for hero title
@@ -1879,6 +2040,7 @@
         smoothScroll();
         animateOnScroll();
         handleNavbarScroll();
+        initEmailJS();
         handleContactForm();
         animateCounters();
 
