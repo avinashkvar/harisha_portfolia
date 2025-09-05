@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Harisha L - Mechanical Design Engineer</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary-color: #2563eb;
+        --secondary-color: #1e40af;
+        --accent-color: #3b82f6;
+        --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        --text-primary: #1f2937;
+        --text-secondary: #6b7280;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafc;
+        --bg-card: #ffffff;
+        --border-color: #e5e7eb;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      [data-theme="dark"] {
+        --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --gradient-hero: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        --text-primary: #f9fafb;
+        --text-secondary: #d1d5db;
+        --bg-primary: #111827;
+        --bg-secondary: #1f2937;
+        --bg-card: #374151;
+        --border-color: #4b5563;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        color: var(--text-primary);
+        background: var(--bg-primary);
+        transition: all 0.3s ease;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Navigation */
+      .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      [data-theme="dark"] .navbar {
+        background: rgba(17, 24, 39, 0.95);
+      }
+
+      .nav-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        transition: all 0.3s ease;
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--text-primary);
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary-color);
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .theme-toggle {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .theme-toggle::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-primary);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 50%;
+      }
+
+      .theme-toggle:hover::before {
+        opacity: 0.1;
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .theme-toggle i {
+        position: relative;
+        z-index: 1;
+        color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: var(--gradient-hero);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="g1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="20" cy="20" r="2" fill="url(%23g1)"/><circle cx="80" cy="80" r="1.5" fill="url(%23g1)"/><circle cx="80" cy="20" r="1" fill="url(%23g1)"/><circle cx="20" cy="80" r="2.5" fill="url(%23g1)"/><circle cx="50" cy="10" r="1" fill="url(%23g1)"/><circle cx="10" cy="50" r="1.5" fill="url(%23g1)"/><circle cx="90" cy="50" r="1" fill="url(%23g1)"/><circle cx="50" cy="90" r="2" fill="url(%23g1)"/></svg>')
+          repeat;
+        animation: float 20s ease-in-out infinite;
+        opacity: 0.6;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+        animation: pulse 15s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-text h1 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        animation: glow 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+        }
+        to {
+          filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6));
+        }
+      }
+
+      .hero-text h2 {
+        font-size: 1.5rem;
+        background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+        font-weight: 400;
+      }
+
+      .hero-text p {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2rem;
+        line-height: 1.8;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+      }
+
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .btn-primary:hover {
+        background: var(--gradient-secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-outline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-accent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: -1;
+      }
+
+      .btn-outline:hover::before {
+        opacity: 1;
+      }
+
+      .btn-outline:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+        border-color: transparent;
+      }
+
+      .hero-image {
+        text-align: center;
+      }
+
+      .profile-img {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 8px solid var(--bg-card);
+        box-shadow: var(--shadow-lg);
+        transition: transform 0.3s ease;
+      }
+
+      .profile-img:hover {
+        transform: scale(1.05);
+      }
+
+      /* Sections */
+      .section {
+        padding: 80px 0;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        position: relative;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: titleGlow 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes titleGlow {
+        from {
+          filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.3));
+        }
+        to {
+          filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.6));
+        }
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: var(--gradient-primary);
+        border-radius: 2px;
+        box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+      }
+
+      /* About Section */
+      .about {
+        background: var(--bg-secondary);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .about::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 10% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 90% 80%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+      }
+
+      .about-content {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .about-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+
+      .stat-card {
+        background: var(--bg-card);
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-primary);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 0;
+      }
+
+      .stat-card:hover::before {
+        opacity: 0.05;
+      }
+
+      .stat-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+      }
+
+      .about-text p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        margin-bottom: 1.5rem;
+        line-height: 1.8;
+      }
+
+      /* Skills Section */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+
+      .skill-category {
+        background: var(--bg-card);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .skill-category::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-accent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 0;
+      }
+
+      .skill-category:hover::before {
+        opacity: 0.05;
+      }
+
+      .skill-category > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .skill-category:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(79, 172, 254, 0.2);
+      }
+
+      .skill-category h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .skill-tag {
+        background: var(--bg-secondary);
+        color: var(--text-secondary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      .skill-tag:hover {
+        background: var(--gradient-primary);
+        color: white;
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      /* Experience Section */
+      .experience {
+        background: var(--bg-secondary);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .experience::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 80% 20%, rgba(79, 172, 254, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+      }
+
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--primary-color);
+        border-radius: 2px;
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+        background: var(--bg-card);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        margin-left: 2rem;
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .timeline-item::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-secondary);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 0;
+      }
+
+      .timeline-item:hover::after {
+        opacity: 0.05;
+      }
+
+      .timeline-item > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -3rem;
+        top: 2rem;
+        width: 15px;
+        height: 15px;
+        background: var(--primary-color);
+        border-radius: 50%;
+        border: 3px solid var(--bg-primary);
+      }
+
+      .timeline-date {
+        background: var(--gradient-accent);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .timeline-company {
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        font-style: italic;
+      }
+
+      .timeline-description ul {
+        padding-left: 1.5rem;
+        color: var(--text-secondary);
+      }
+
+      .timeline-description li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .project-card {
+        background: var(--bg-card);
+        border-radius: 12px;
+        padding: 2rem;
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-primary);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 0;
+      }
+
+      .project-card:hover::after {
+        opacity: 0.05;
+      }
+
+      .project-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .project-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      }
+
+      .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+      }
+
+      .project-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .project-customer {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        font-style: italic;
+      }
+
+      .project-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .project-tag {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .project-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+      }
+
+      /* Contact Section */
+      .contact {
+        background: var(--bg-secondary);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .contact::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 30%, rgba(240, 147, 251, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 70% 70%, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+      }
+
+      .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+      }
+
+      .contact-info {
+        background: var(--bg-card);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .contact-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .contact-icon:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      }
+
+      .contact-details h3 {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .contact-details p {
+        color: var(--text-secondary);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .social-link {
+        width: 50px;
+        height: 50px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .social-link:hover {
+        background: var(--gradient-primary);
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      .contact-form {
+        background: var(--bg-card);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        font-family: inherit;
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--text-primary);
+        color: var(--bg-primary);
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero-content {
+          grid-template-columns: 1fr;
+          text-align: center;
+          gap: 2rem;
+        }
+
+        .hero-text h1 {
+          font-size: 2.5rem;
+        }
+
+        .about-content,
+        .contact-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .cta-buttons {
+          justify-content: center;
+        }
+
+        .profile-img {
+          width: 250px;
+          height: 250px;
+        }
+
+        .timeline {
+          padding-left: 1rem;
+        }
+
+        .timeline-item {
+          margin-left: 1rem;
+        }
+      }
+
+      /* Animations */
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .fade-in-up.animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .fade-in-left {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .fade-in-left.animate {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .fade-in-right {
+        opacity: 0;
+        transform: translateX(30px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .fade-in-right.animate {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      /* Enhanced hover animations */
+      .hero-text h1 {
+        animation: titleFloat 6s ease-in-out infinite;
+      }
+
+      @keyframes titleFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .profile-img {
+        animation: profileFloat 8s ease-in-out infinite;
+      }
+
+      @keyframes profileFloat {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        25% {
+          transform: translateY(-5px) rotate(1deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(0deg);
+        }
+        75% {
+          transform: translateY(-5px) rotate(-1deg);
+        }
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary-color);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-content">
+          <div class="logo">Harisha L</div>
+          <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+          <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon" id="theme-icon"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text fade-in-left">
+            <h1>Harisha L</h1>
+            <h2>Mechanical Design & Analysis Engineer</h2>
+            <p>
+              Experienced in Space and Defence grade electronics with 4+ years of expertise in
+              designing innovative mechanical systems for RF, Power, and Digital applications.
+              Specializing in CAD software, thermal management, and New Product Development.
+            </p>
+            <div class="cta-buttons">
+              <a href="#contact" class="btn btn-primary">
+                <i class="fas fa-envelope"></i>
+                Get In Touch
+              </a>
+              <a href="#projects" class="btn btn-outline">
+                <i class="fas fa-briefcase"></i>
+                View Projects
+              </a>
+            </div>
+          </div>
+          <div class="hero-image fade-in-right">
+            <img
+              src="./assets/WhatsApp Image 2025-09-05 at 18.21.49.jpeg"
+              alt="Harisha L"
+              class="profile-img"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section" id="about">
+      <div class="container">
+        <h2 class="section-title fade-in-up">About Me</h2>
+        <div class="about-content">
+          <div class="about-stats fade-in-left">
+            <div class="stat-card">
+              <div class="stat-number">4+</div>
+              <div>Years Experience</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">15+</div>
+              <div>Projects Completed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">10+</div>
+              <div>Major Clients</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">100%</div>
+              <div>Success Rate</div>
+            </div>
+          </div>
+          <div class="about-text fade-in-right">
+            <p>
+              I'm a passionate Mechanical Design Engineer with extensive experience in the Space and
+              Defence electronics industry. My expertise lies in creating innovative mechanical
+              packaging solutions for complex RF, Power, and Digital systems.
+            </p>
+            <p>
+              Throughout my career at Centum Electronics Ltd, I've been responsible for designing
+              and developing customized mechanical systems that meet stringent industry standards
+              including JSS55555, MIL STD, and ISRO specifications. I specialize in thermal
+              management solutions, structural analysis, and ensuring EMI/EMC compliance.
+            </p>
+            <p>
+              My educational background includes a BE in Mechanical Engineering with a CGPA of 8.5,
+              and I'm proficient in multiple languages including English and Kannada. I'm constantly
+              learning and adapting to new technologies to deliver cutting-edge solutions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills section" id="skills">
+      <div class="container">
+        <h2 class="section-title fade-in-up">Skills & Expertise</h2>
+        <div class="skills-grid">
+          <div class="skill-category fade-in-up">
+            <h3><i class="fas fa-drafting-compass"></i> CAD & Design</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">SolidWorks</span>
+              <span class="skill-tag">AutoCAD</span>
+              <span class="skill-tag">CATIA</span>
+              <span class="skill-tag">Solid Edge</span>
+              <span class="skill-tag">3D Printing</span>
+              <span class="skill-tag">Sheet Metal Design</span>
+            </div>
+          </div>
+          <div class="skill-category fade-in-up">
+            <h3><i class="fas fa-cogs"></i> Engineering</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Design for Manufacturability</span>
+              <span class="skill-tag">Design for Assembly</span>
+              <span class="skill-tag">DFMEA</span>
+              <span class="skill-tag">GD&T</span>
+              <span class="skill-tag">Tolerance Stack-up</span>
+            </div>
+          </div>
+          <div class="skill-category fade-in-up">
+            <h3><i class="fas fa-thermometer-half"></i> Thermal Management</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">Cold Plate Design</span>
+              <span class="skill-tag">Heat Sink Design</span>
+              <span class="skill-tag">Thermal Analysis</span>
+              <span class="skill-tag">Natural Convection</span>
+              <span class="skill-tag">Forced Convection</span>
+            </div>
+          </div>
+          <div class="skill-category fade-in-up">
+            <h3><i class="fas fa-microchip"></i> Specialized</h3>
+            <div class="skill-tags">
+              <span class="skill-tag">HMC Package Design</span>
+              <span class="skill-tag">EMI/EMC Compliance</span>
+              <span class="skill-tag">Injection Molding</span>
+              <span class="skill-tag">FEA Simulations</span>
+              <span class="skill-tag">Manufacturing Knowledge</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience section" id="experience">
+      <div class="container">
+        <h2 class="section-title fade-in-up">Work Experience</h2>
+        <div class="timeline">
+          <div class="timeline-item fade-in-up">
+            <div class="timeline-date">Oct 2021 – Present</div>
+            <div class="timeline-title">Mechanical Design & Analysis Engineer</div>
+            <div class="timeline-company">Centum Electronics Ltd, Bangalore, Karnataka</div>
+            <div class="timeline-description">
+              <ul>
+                <li>
+                  Design and development of customized mechanical packaging for RF, Power and
+                  Digital subsystems
+                </li>
+                <li>
+                  Create feasibility designs, specification compliance documents, and BOMs for
+                  customer RFQs
+                </li>
+                <li>
+                  Perform thermal and structural analysis using FEA simulations to validate designs
+                </li>
+                <li>
+                  Design high-performance cold plates for thermal management and heat sink solutions
+                </li>
+                <li>
+                  Ensure EMI/EMC compliance and conduct qualification testing per customer
+                  requirements
+                </li>
+                <li>
+                  Collaborate with cross-functional teams and work directly with manufacturers
+                </li>
+                <li>
+                  Work with major clients including BEL, DRDO, ISRO-SAC & VSSC, OLF, HVF, SSPL
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects section" id="projects">
+      <div class="container">
+        <h2 class="section-title fade-in-up">Featured Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card fade-in-up">
+            <div class="project-title">Power Unit for T-90 Tank</div>
+            <div class="project-customer">Customer: OLF, Dehradun</div>
+            <div class="project-description">
+              Reverse engineering project for T-90 tank operating electronics. Developed with
+              domestic equivalent materials while retaining original specifications. Successfully
+              qualified tank trials and approved for mass production.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Reverse Engineering</span>
+              <span class="project-tag">Defence</span>
+              <span class="project-tag">Mass Production</span>
+            </div>
+          </div>
+
+          <div class="project-card fade-in-up">
+            <div class="project-title">GaN Based X-Band Plank Unit (32 Channel)</div>
+            <div class="project-customer">Customer: LRDE, Bengaluru</div>
+            <div class="project-description">
+              10 GHz GaN Based 32 channel RF package designed for Naval environmental conditions.
+              Features advanced thermal management, conduction cooling, and custom RF test setup.
+              Successfully passed EMI/EMC, vibration, and thermal testing.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">RF Package</span>
+              <span class="project-tag">Naval Systems</span>
+              <span class="project-tag">Thermal Management</span>
+            </div>
+          </div>
+
+          <div class="project-card fade-in-up">
+            <div class="project-title">TTD Based X-Band Plank Unit</div>
+            <div class="project-customer">Customer: LRDE, Bengaluru</div>
+            <div class="project-description">
+              10 GHz RF package with two modules and cold plate for Uttam radar application. Design
+              approved by customer with parts currently under manufacturing phase.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Radar Systems</span>
+              <span class="project-tag">Cold Plate</span>
+              <span class="project-tag">RF Package</span>
+            </div>
+          </div>
+
+          <div class="project-card fade-in-up">
+            <div class="project-title">Gyrostabilizer for T90 Tank</div>
+            <div class="project-customer">Customer: OLF, Dehradun</div>
+            <div class="project-description">
+              Control system component to reduce gun barrel tilting movement. Reverse engineering
+              with precision tolerances (0.1 micron) and static balancing. Successfully qualified
+              all tests and tank trials.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Precision Engineering</span>
+              <span class="project-tag">Static Balancing</span>
+              <span class="project-tag">Defence</span>
+            </div>
+          </div>
+
+          <div class="project-card fade-in-up">
+            <div class="project-title">GSAT-7R CXS & SXC Frequency Converter</div>
+            <div class="project-customer">Customer: SAC-ISRO</div>
+            <div class="project-description">
+              Satellite payload package for C-band (6463-6467MHz) to S-band (2513-2512MHz) frequency
+              conversion. Qualified all space-grade tests and successfully delivered to ISRO.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">Space Systems</span>
+              <span class="project-tag">Frequency Converter</span>
+              <span class="project-tag">ISRO</span>
+            </div>
+          </div>
+
+          <div class="project-card fade-in-up">
+            <div class="project-title">8x8 Tile Array Radar Unit</div>
+            <div class="project-customer">Customer: LRDE, Bengaluru</div>
+            <div class="project-description">
+              AESA radar array antenna system with liquid-cooled cold plate design. Dissipates 500W
+              heat in compact package (125x150x10mm). Currently in final design stage for customer
+              demonstration.
+            </div>
+            <div class="project-tags">
+              <span class="project-tag">AESA Radar</span>
+              <span class="project-tag">Liquid Cooling</span>
+              <span class="project-tag">Compact Design</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact section" id="contact">
+      <div class="container">
+        <h2 class="section-title fade-in-up">Get In Touch</h2>
+        <div class="contact-content">
+          <div class="contact-info fade-in-left">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-details">
+                <h3>Location</h3>
+                <p>Bengaluru, Karnataka, India</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone"></i>
+              </div>
+              <div class="contact-details">
+                <h3>Phone</h3>
+                <p>+91 9741042357</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-details">
+                <h3>Email</h3>
+                <p>harishharishl124@gmail.com</p>
+              </div>
+            </div>
+            <div class="social-links">
+              <a
+                href="https://linkedin.com/in/harisha-l-912605299/"
+                class="social-link"
+                target="_blank"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="mailto:harishharishl124@gmail.com" class="social-link">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="tel:+919741042357" class="social-link">
+                <i class="fas fa-phone"></i>
+              </a>
+            </div>
+          </div>
+          <div class="contact-form fade-in-right">
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required />
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i>
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2024 Harisha L. All rights reserved. | Mechanical Design & Analysis Engineer</p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      // Theme Toggle
+      function toggleTheme() {
+        const body = document.body;
+        const themeIcon = document.getElementById("theme-icon");
+        const navbar = document.querySelector(".navbar");
+
+        if (body.getAttribute("data-theme") === "dark") {
+          body.removeAttribute("data-theme");
+          themeIcon.className = "fas fa-moon";
+          localStorage.setItem("theme", "light");
+          // Update navbar background for light mode
+          if (window.scrollY > 100) {
+            navbar.style.background = "rgba(255, 255, 255, 0.98)";
+          } else {
+            navbar.style.background = "rgba(255, 255, 255, 0.95)";
+          }
+        } else {
+          body.setAttribute("data-theme", "dark");
+          themeIcon.className = "fas fa-sun";
+          localStorage.setItem("theme", "dark");
+          // Update navbar background for dark mode
+          if (window.scrollY > 100) {
+            navbar.style.background = "rgba(17, 24, 39, 0.98)";
+          } else {
+            navbar.style.background = "rgba(17, 24, 39, 0.95)";
+          }
+        }
+      }
+
+      // Load saved theme
+      function loadTheme() {
+        const savedTheme = localStorage.getItem("theme");
+        const themeIcon = document.getElementById("theme-icon");
+        const navbar = document.querySelector(".navbar");
+
+        if (savedTheme === "dark") {
+          document.body.setAttribute("data-theme", "dark");
+          themeIcon.className = "fas fa-sun";
+          // Set navbar background for dark mode
+          if (window.scrollY > 100) {
+            navbar.style.background = "rgba(17, 24, 39, 0.98)";
+          } else {
+            navbar.style.background = "rgba(17, 24, 39, 0.95)";
+          }
+        } else {
+          // Set navbar background for light mode
+          if (window.scrollY > 100) {
+            navbar.style.background = "rgba(255, 255, 255, 0.98)";
+          } else {
+            navbar.style.background = "rgba(255, 255, 255, 0.95)";
+          }
+        }
+      }
+
+      // Smooth scrolling for navigation links
+      function smoothScroll() {
+        const links = document.querySelectorAll('a[href^="#"]');
+
+        links.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute("href");
+            const targetSection = document.querySelector(targetId);
+
+            if (targetSection) {
+              const offsetTop = targetSection.offsetTop - 80;
+
+              window.scrollTo({
+                top: offsetTop,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+      }
+
+      // Animate elements on scroll
+      function animateOnScroll() {
+        const elements = document.querySelectorAll(".fade-in-up, .fade-in-left, .fade-in-right");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("animate");
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px",
+          }
+        );
+
+        elements.forEach((element) => {
+          observer.observe(element);
+        });
+      }
+
+      // Navbar background change on scroll
+      function handleNavbarScroll() {
+        const navbar = document.querySelector(".navbar");
+
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 100) {
+            navbar.style.background =
+              document.body.getAttribute("data-theme") === "dark"
+                ? "rgba(17, 24, 39, 0.98)"
+                : "rgba(255, 255, 255, 0.98)";
+          } else {
+            navbar.style.background =
+              document.body.getAttribute("data-theme") === "dark"
+                ? "rgba(17, 24, 39, 0.95)"
+                : "rgba(255, 255, 255, 0.95)";
+          }
+        });
+      }
+
+      // Contact form handling
+      function handleContactForm() {
+        const form = document.getElementById("contactForm");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Get form data
+          const formData = new FormData(form);
+          const name = formData.get("name");
+          const email = formData.get("email");
+          const subject = formData.get("subject");
+          const message = formData.get("message");
+
+          // Create mailto link
+          const mailtoLink = `mailto:harishharishl124@gmail.com?subject=${encodeURIComponent(
+            subject
+          )}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+
+          // Open email client
+          window.location.href = mailtoLink;
+
+          // Show success message (you can customize this)
+          alert(
+            "Thank you for your message! Your email client should now open with the pre-filled message."
+          );
+
+          // Reset form
+          form.reset();
+        });
+      }
+
+      // Typing animation for hero title
+      function typeWriter() {
+        const text = "Harisha L";
+        const titleElement = document.querySelector(".hero-text h1");
+        let index = 0;
+
+        function type() {
+          if (index < text.length) {
+            titleElement.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, 100);
+          }
+        }
+
+        // Clear the title and start typing after a short delay
+        setTimeout(() => {
+          titleElement.textContent = "";
+          type();
+        }, 1000);
+      }
+
+      // Counter animation for stats
+      function animateCounters() {
+        const counters = document.querySelectorAll(".stat-number");
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const counter = entry.target;
+              const target = counter.textContent.replace("+", "").replace("%", "");
+              const suffix = counter.textContent.includes("+")
+                ? "+"
+                : counter.textContent.includes("%")
+                ? "%"
+                : "";
+              let count = 0;
+              const increment = target / 50;
+
+              const timer = setInterval(() => {
+                count += increment;
+                if (count >= target) {
+                  counter.textContent = target + suffix;
+                  clearInterval(timer);
+                } else {
+                  counter.textContent = Math.floor(count) + suffix;
+                }
+              }, 40);
+
+              observer.unobserve(counter);
+            }
+          });
+        });
+
+        counters.forEach((counter) => observer.observe(counter));
+      }
+
+      // Initialize everything when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        loadTheme();
+        smoothScroll();
+        animateOnScroll();
+        handleNavbarScroll();
+        handleContactForm();
+        animateCounters();
+
+        // Add some delay for better UX
+        setTimeout(() => {
+          // typeWriter(); // Uncomment if you want the typing effect
+        }, 500);
+      });
+
+      // Handle window resize
+      window.addEventListener("resize", function () {
+        // Update any responsive calculations if needed
+      });
+
+      // Parallax effect for hero background
+      function handleParallax() {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector(".hero");
+        const heroBefore = document.querySelector(".hero::before");
+
+        if (hero) {
+          const rate = scrolled * -0.5;
+          hero.style.transform = `translateY(${rate}px)`;
+        }
+      }
+
+      // Add parallax scroll listener
+      window.addEventListener("scroll", handleParallax);
+
+      // Preloader (optional)
+      window.addEventListener("load", function () {
+        document.body.classList.add("loaded");
+      });
+    </script>
+  </body>
+</html>
